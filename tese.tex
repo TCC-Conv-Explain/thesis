@@ -1,0 +1,205 @@
+\documentclass[a4paper,12pt,twoside,brazilian,english]{book}
+\usepackage{imegoodies}
+\usepackage[thesis]{imelooks}
+
+\graphicspath{{figuras/},{fig/},{logos/},{img/},{images/},{imagens/}}
+
+\title{Título do trabalho}[um subtítulo]
+\translatedtitle{Title of the document}[a subtitle]
+
+\author[fem]{Nome Completo}
+
+\def\profa{Prof\kern.02em.\kern-.07emª\kern.07em}
+\def\dra{Dr\kern-.04em.\kern-.11emª\kern.07em}
+
+\orientador[fem]{\profa{} \dra{} Fulana de Tal}
+
+\banca{
+    \profa{} \dra{} Fulana de Tal (orientadora) -- IME-USP [sem ponto final],
+    % Em inglês, não há o "ª"
+    %Prof. Dr. Fulana de Tal (advisor) -- IME-USP [sem ponto final],
+    Prof. Dr. Ciclano de Tal -- IME-USP [sem ponto final],
+    \profa{} \dra{} Convidada de Tal -- IMPA [sem ponto final],
+}
+
+\tipotese{
+  %mestrado,
+  %doutorado,
+  tcc,
+  %definitiva, % É a versão para defesa ou a versão definitiva?
+  %quali, % É qualificação?
+  programa={Ciência da Computação},
+}
+
+\defesa{
+  local={São Paulo},
+  data=2017-08-10, % YYYY-MM-DD
+}
+
+\direitos{CC-BY}
+
+\fichacatalografica{}  % n sei pra que isso serve. Por enquanto ...
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% CAPA E PÁGINAS INICIAIS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+\pagestyle{plain}
+
+\onehalfspacing % Espaçamento 1,5 na capa e páginas iniciais
+
+\maketitle % capa e folha de rosto
+
+%%%%%%%%%%%%%%%% DEDICATÓRIA, AGRADECIMENTOS, RESUMO/ABSTRACT %%%%%%%%%%%%%%%%%%
+
+\begin{dedicatoria}
+    Esta seção é opcional e fica numa página separada; ela pode ser usada para
+    uma dedicatória ou epígrafe.
+\end{dedicatoria}
+
+
+% Reinicia o contador de páginas (a próxima página recebe o número "i") para
+% que a página da dedicatória não seja contada.
+\pagenumbering{roman}
+
+\chapter*{Agradecimentos}
+\epigrafe{Do. Or do not. There is no try.}{Mestre Yoda}
+
+Texto texto texto texto texto texto texto texto texto texto texto texto texto
+texto texto texto texto texto texto texto texto texto texto texto texto texto
+texto texto texto texto texto texto texto texto texto texto texto texto texto
+texto texto texto texto. Texto opcional.
+
+\input{conteudo/resumoabstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% LISTAS DE FIGURAS ETC. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Settings importantes definidos pelo pessoal do github que administra os templates
+\cleardoublepage
+
+\newcommand\disablenewpage[1]{{\let\clearpage\par\let\cleardoublepage\par #1}}
+
+\bgroup
+\raggedbottom
+
+%%%%% Listas criadas manualmente
+
+%\chapter*{Lista de abreviaturas}
+\disablenewpage{\chapter*{Lista de abreviaturas}}
+
+\begin{tabular}{rl}
+   CFT & Transformada contínua de Fourier (\emph{Continuous Fourier Transform})\\
+   DFT & Transformada discreta de Fourier (\emph{Discrete Fourier Transform})\\
+  EIIP & Potencial de interação elétron-íon (\emph{Electron-Ion Interaction Potentials})\\
+  STFT & Transformada de Fourier de tempo reduzido (\emph{Short-Time Fourier Transform})\\
+  ABNT & Associação Brasileira de Normas Técnicas\\
+   URL & Localizador Uniforme de Recursos (\emph{Uniform Resource Locator})\\
+   IME & Instituto de Matemática e Estatística\\
+   USP & Universidade de São Paulo
+\end{tabular}
+
+%\chapter*{Lista de símbolos}
+\disablenewpage{\chapter*{Lista de símbolos}}
+
+\begin{tabular}{rl}
+  $\omega$ & Frequência angular\\
+    $\psi$ & Função de análise \emph{wavelet}\\
+    $\Psi$ & Transformada de Fourier de $\psi$\\
+\end{tabular}
+
+% Quebra de página manual
+\clearpage
+
+%%%%% Listas criadas automaticamente
+
+% Você pode escolher se quer ou não permitir a quebra de página
+%\listoffigures
+\disablenewpage{\listoffigures}
+
+% Você pode escolher se quer ou não permitir a quebra de página
+%\listoftables
+\disablenewpage{\listoftables}
+
+% Esta lista é criada "automaticamente" pela package float quando
+% definimos o novo tipo de float "program" (em utils.tex)
+% Você pode escolher se quer ou não permitir a quebra de página
+%\listof{program}{\programlistname}
+\disablenewpage{\listof{program}{\programlistname}}
+
+% Sumário (obrigatório)
+\tableofcontents
+
+\egroup % Final de "raggedbottom"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CAPÍTULOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter
+
+\pagestyle{mainmatter}
+
+% Espaçamento simples
+\singlespacing
+
+% A introdução não tem número de capítulo, então os cabeçalhos também não
+\pagestyle{unnumberedchapter}
+
+% Capitulos:
+% \input{conteudo/00-exemplo-introducao}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% APÊNDICES E ANEXOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% Apêndices %%%%
+
+\cleardoublepage
+
+\pagestyle{appendix}
+
+\appendix
+
+% \addappheadtotoc acrescenta a palavra "Apêndice" ao sumário; se
+% só há apêndices, sem anexos, provavelmente não é necessário.
+\addappheadtotoc
+
+\input{conteudo/apendice-exemplo-faq}
+\par
+
+%%%% Anexos %%%%
+
+\cleardoublepage
+
+\pagestyle{appendix} % repete o anterior, caso você não use apêndices
+
+\annex
+
+% \addappheadtotoc acrescenta a palavra "Anexo" ao sumário; se
+% só há anexos, sem apêndices, provavelmente não é necessário.
+\addappheadtotoc
+
+% \input{conteudo/anexo-exemplo-imegoodies}  % crashando aqui
+\par
+% \input{conteudo/anexo-exemplo-pseudocodigo}  % crashando aqui também
+\par
+
+%%%%%%%%%%%%%%% SEÇÕES FINAIS (BIBLIOGRAFIA E ÍNDICE REMISSIVO) %%%%%%%%%%%%%%%%
+
+% O comando backmatter desabilita a numeração de capítulos.
+\backmatter
+
+\pagestyle{backmatter}
+
+% Espaço adicional no sumário antes das referências / índice remissivo
+\addtocontents{toc}{\vspace{2\baselineskip plus .5\baselineskip minus .5\baselineskip}}
+
+% A bibliografia é obrigatória
+
+\printbibliography[
+  title=\refname\label{sec:bib}, % "Referências", recomendado pela ABNT
+  %title=\bibname\label{sec:bib}, % "Bibliografia"
+  heading=bibintoc, % Inclui a bibliografia no sumário
+]
+
+\end{document}
