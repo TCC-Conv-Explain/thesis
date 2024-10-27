@@ -44,7 +44,24 @@ Visualizing regions of images that our vision model "sees" is only possible with
 
 \citet{DBLP:journals/corr/Miller17a}
 
-\section{Gradient Descent and Back Propagation}
+
+\section{Gradient Descent}
+
+Let \(f\colon A \to B\) where \(A \subseteq \mathbb{R}^n\) for \(n \in \mathbb{N}\) and \(B \subseteq \mathbb{R^+}\). Suppose we want to find the solution to the optimization problem
+
+\[\argmin_{x \in A} f(x)\]
+when \(\frac{\partial f}{\partial x}\) is known for any value of \(x\). Considering that the vector \(\frac{\partial f}{\partial x}\) points to the direction of the steepest ascent of the function, the vector \(- \frac{\partial f}{\partial x}\) will point to the steepest descent from the given point \(x\).
+Therefore, one can define an initial random value for \(x\) and update \(x\) using \(- \frac{\partial f}{\partial x}\) and a scaling factor \(\alpha\) in order to find a local minimum of \(f\) and an approximation to the solution of given optimization problem.
+
+We can define such method using the following formula, where \(x_t\) represents the value of \(x\) at iteration \(t\) of the algorithm:
+
+\[x_{t + 1} = x_t - \alpha \frac{\partial f}{\partial x}.\]
+
+The term \(\alpha\) is often called the \emph{learning rate} used in the Gradient Descent method and is often defined manually by the user.
+
+The Gradient Descent method can be used to optimize a neural network's parameters to solve a given problem using a \emph{loss function}. 
+
+\section{Back Propagation}
 
 \lipsum[4]
 
