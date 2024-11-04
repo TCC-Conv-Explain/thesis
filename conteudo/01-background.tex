@@ -51,13 +51,13 @@ Let \(f\colon A \to B\) where \(A \subseteq \mathbb{R}^n\) for \(n \in \mathbb{N
 
 \[\argmin_{x \in A} f(x)\]
 when \(\frac{\partial f}{\partial x}\) is known for any value of \(x\). Considering that the vector \(\frac{\partial f}{\partial x}\) points to the direction of the steepest ascent of the function, the vector \(- \frac{\partial f}{\partial x}\) will point to the steepest descent from the given point \(x\).
-Therefore, one can define an initial random value for \(x\) and update \(x\) using \(- \frac{\partial f}{\partial x}\) and a scaling factor \(\alpha\) in order to find a local minimum of \(f\) and an approximation to the solution of given optimization problem.
+Therefore, one can define an initial random value for \(x\) and update \(x\) using \(- \frac{\partial f}{\partial x}\) and a scaling factor \(\eta\) in order to find a local minimum of \(f\) and an approximation to the solution of given optimization problem.
 
 We can define such method using the following formula, where \(x_t\) represents the value of \(x\) at iteration \(t\) of the algorithm:
 
-\[x_{t + 1} = x_t - \alpha \frac{\partial f}{\partial x}.\]
+\[x_{t + 1} = x_t - \eta \frac{\partial f}{\partial x}.\]
 
-The term \(\alpha\) is often called the \emph{learning rate} used in the Gradient Descent method and is often defined manually by the user.
+The term \(\eta\) is often called the \emph{learning rate} used in the Gradient Descent method and is often defined manually by the user.
 
 The Gradient Descent method can be used to optimize a neural network's parameters to solve a given problem using a \emph{loss function}. 
 % TODO: Devo adicionar menção que vamos usar isso também com Feature Visualization?
@@ -68,10 +68,42 @@ Neural Networks are proven to be universal approximators\footnote{Hornik, K., St
 therefore making Neural networks adept at modeling a range of different complex problems.
 This class of models have seen a growing presence across both academic and industry landscapes. However, given the architecture of multiple hidden layers of Neural Networks creating complex internal patterns, such models are classified as Explainable Models. 
 
-In this section, the inner workings of Neural Networks will be explained, starting with the \emph{Perceptron}, considered a fundamental building block of Neural Networks.
+In this section, the inner workings of Neural Networks will be explained, starting with the \emph{Perceptron}, considered the fundamental building block of Neural Networks.
 
 \subsection{Perceptron}
 
+A Perceptron is a Machine Learning model inspired by how biological neurons work. 
+It is a simple binary linear classifier that defines its parameters by linear combinations of points in the dataset.
+The Perceptron model can be described by Figure \ref{fig:perceptron}. 
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{figuras/perceptron.png}
+    \caption{Perceptron Architecture. Font: \emph{Towards Data Science\footnotemark}. \label{fig:perceptron}}
+\end{figure}
+\footnotetext{https://towardsdatascience.com/what-the-hell-is-perceptron-626217814f53}
+
+Where the weights \(w_i\) for \(i \in \{0, 1, \cdots, n\}\) are trainable parameters and the step function can be defined as \(\sigma \colon \mathbb{R} \to \{0, 1\}\) such that
+
+\[\sigma(x) = 
+\begin{cases}
+    1 & \text{ if } x \geq 0 \\
+    0 & \text{ if } x < 0.
+\end{cases}\]
+
+Therefore, the Perceptron model can be defined as the function \(f \colon \mathbb{R}^n \to \{0, 1\}\) where
+
+\[f(x) = \sigma(w_0 + \sum_{i = 1}^{n} w_i x_i).\]
+
+The Perceptron model updates its parameters using each sample \((x, y)\) of the dataset with the rule
+
+\[w_i^{t + 1} = w_i^t + \eta \; (y - f(x)) x_i\]
+for \(i \in \{1, \cdots, n\}\) and
+
+\[w_0^{t + 1} = w_0^t + \eta \; (y - f(x)),\]
+where \(\eta\) is the \emph{learning rate} hyperparameter and \(t\) is the update iteration number.
+
+As a linear model, the Perceptron can only model linear problems. 
 \section{Convolutional Neural Networks}
 \label{sec:convolutions}
 
