@@ -48,13 +48,20 @@ Visualizing regions of images that our vision model "sees" is only possible with
 
 Let \(f\colon A \to B\) where \(A \subseteq \mathbb{R}^n\) for \(n \in \mathbb{N}\) and \(B \subseteq \mathbb{R^+}\). Suppose we want to find the solution to the optimization problem
 
-\[\argmin_{x \in A} f(x)\]
+\begin{equation}
+    \argmin_{x \in A} f(x)
+    \label{eq:min_func}
+\end{equation}
+
 when \(\frac{\partial f}{\partial x}\) is known for any value of \(x\). Considering that the vector \(\frac{\partial f}{\partial x}\) points to the direction of the steepest ascent of the function, the vector \(- \frac{\partial f}{\partial x}\) will point to the steepest descent from the given point \(x\).
 Therefore, one can define an initial random value for \(x\) and update \(x\) using \(- \frac{\partial f}{\partial x}\) and a scaling factor \(\eta\) in order to find a local minimum of \(f\) and an approximation to the solution of given optimization problem.
 
 We can define such method using the following formula, where \(x_t\) represents the value of \(x\) at iteration \(t\) of the algorithm:
 
-\[x_{t + 1} = x_t - \eta \frac{\partial f}{\partial x}.\]
+\begin{equation}
+    x_{t + 1} = x_t - \eta \frac{\partial f}{\partial x}.
+    \label{eq:gradient_descent}  
+\end{equation}
 
 The term \(\eta\) is often called the \emph{learning rate} used in the Gradient Descent method and is often defined manually by the user.
 
@@ -84,22 +91,35 @@ The Perceptron model can be described by Figure \ref{fig:perceptron}.
 
 Where the weights \(w_i\) for \(i \in \{0, 1, \cdots, n\}\) are trainable parameters and the step function can be defined as \(\sigma \colon \mathbb{R} \to \{0, 1\}\) such that
 
-\[\sigma(x) = 
-\begin{cases}
-    1 & \text{ if } x \geq 0 \\
-    0 & \text{ if } x < 0.
-\end{cases}\]
+\begin{equation}
+    \sigma(x) = 
+    \begin{cases}
+        1 & \text{ if } x \geq 0 \\
+        0 & \text{ if } x < 0.
+    \end{cases}
+    \label{eq:step_function_perceptron}    
+\end{equation}
 
 Therefore, the Perceptron model can be defined as the function \(f \colon \mathbb{R}^n \to \{0, 1\}\) where
 
-\[f(x) = \sigma(w_0 + \sum_{i = 1}^{n} w_i x_i).\]
+\begin{equation}
+    f(x) = \sigma(w_0 + \sum_{i = 1}^{n} w_i x_i).
+    \label{eq:perceptron}
+\end{equation}
 
 The Perceptron model updates its parameters using each sample \((x, y)\) of the dataset with the rule
 
-\[w_i^{t + 1} = w_i^t + \eta \; (y - f(x)) x_i\]
+\begin{equation}
+    w_i^{t + 1} = w_i^t + \eta \; (y - f(x)) x_i
+    \label{eq:perceptron_update}  
+\end{equation}
+
 for \(i \in \{1, \cdots, n\}\) and
 
-\[w_0^{t + 1} = w_0^t + \eta \; (y - f(x)),\]
+\begin{equation}
+    w_0^{t + 1} = w_0^t + \eta \; (y - f(x)),  
+\end{equation}
+
 where \(\eta\) is the \emph{learning rate} hyperparameter and \(t\) is the update iteration number.
 
 As a linear model, the Perceptron can only model linear problems, which only represent a small subset of real world problems.
@@ -107,6 +127,26 @@ As a solution, researchers started combining Perceptrons in a layered structure.
 The multiple layers consisting of multiple Perceptrons created a structure capable of representing more complex functions, or more specifically, \emph{any continuous function}.
 Such architecture is called a \emph{Multilayer Perceptron} (MLP). Neural Networks are considered \emph{"softened" MLPs}\footnote{Terminology used by Professor Yaser Abu-Mostafa, in the famous Machine Learning Book \emph{Learning from Data}. Source: https://work.caltech.edu/telecourse}, 
 which means that those models use differentiable activation functions that allow for gradient-based optimization, using algorithms like the \emph{Gradient Descent}.
+
+\subsection{How Neural Networks Work}
+
+Neural Networks work by using multiple Perceptrons with differentiable activation functions grouped in a layered structure in order to model complex functions. 
+Such model's architecture can be described by Figure \ref{fig:neural-network} in a network similar to a graph.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{figuras/Neural-Networks-Architecture.png}
+    \caption{Neural Network Architecture. Font: \emph{Geeks For Geeks\footnotemark}. \label{fig:neural-network}}
+\end{figure}
+\footnotetext{https://www.geeksforgeeks.org/artificial-neural-networks-and-its-applications/}
+
+% TODO: Esse parágrafo n está 100% certo, já que nem todo nó do grafo representa um neurônio da rede, ou, um perceptron.
+Each node of such graph represents a \emph{neuron}, which is a single Perceptron model with each edge representing an output of a neuron being passed to another neuron as input.
+Each edge will have a weight associated to it, representing the importance of a neuron from a previous layer. 
+Inference in this model is called \emph{Forward Propagation}, where the input is passed in the \emph{Input Layer} and is computed by calculating a Perceptron's output and passing it to the next layer, until the \emph{Output Layer} is reached.
+Layers in between are called \emph{Hidden Layers}.
+
+Mathematically, a neuron can be described by the same formula in equation \ref{eq:perceptron}, but with a different activation function.
 
 \section{Convolutional Neural Networks}
 \label{sec:convolutions}
