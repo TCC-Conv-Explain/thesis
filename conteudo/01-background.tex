@@ -102,7 +102,12 @@ for \(i \in \{1, \cdots, n\}\) and
 \[w_0^{t + 1} = w_0^t + \eta \; (y - f(x)),\]
 where \(\eta\) is the \emph{learning rate} hyperparameter and \(t\) is the update iteration number.
 
-As a linear model, the Perceptron can only model linear problems. 
+As a linear model, the Perceptron can only model linear problems, which only represent a small subset of real world problems.
+As a solution, researchers started combining Perceptrons in a layered structure. 
+The multiple layers consisting of multiple Perceptrons created a structure capable of representing more complex functions, or more specifically, \emph{any continuous function}.
+Such architecture is called a \emph{Multilayer Perceptron} (MLP). Neural Networks are considered \emph{"softened" MLPs}\footnote{Terminology used by Professor Yaser Abu-Mostafa, in the famous Machine Learning Book \emph{Learning from Data}. Source: https://work.caltech.edu/telecourse}, 
+which means that those models use differentiable activation functions that allow for gradient-based optimization, using algorithms like the \emph{Gradient Descent}.
+
 \section{Convolutional Neural Networks}
 \label{sec:convolutions}
 
