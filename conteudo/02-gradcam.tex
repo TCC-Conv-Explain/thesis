@@ -1,0 +1,28 @@
+\section{GradCAM}
+
+One of the most proeminent model-specific methods to acquire explanations for classification with CNNs is GradCAM. The intuition for the method is simple. At the last conovlutional layers, we have several channels that represent each a different feature. Those features are used by the next part of the network to produce the final output. If we want to know which parts of the image are being more useful to the network, we can look at the feature maps and observe which parts of the image are generating the signal used by the rest of the network. 
+
+The problem with this approach is that the features have informations about all the output classes. How we know what features are more important to the decision? The idea behind GradCAM is to \textbf{average the feature maps weighted by the gradient} of each channel with respect to a specific class. 
+
+However, this will still highlight the regions that have a negative influence to the decision. To filter out those regions, the result is passed through ReLU. The result is a coarse heatmap of the image highlighting important regions.
+
+The formula for the heatmap with regard to the class $c$ is:
+
+\[
+    H  = \text{ReLU}(\sum_k \alpha_k^c A^k)
+\]
+
+Where $\alpha_k^c$, the weight of the $k$-th feature map for the class $c$, is defined as:
+
+\[
+    \alpha_k^c=\frac{1}{Z} \sum_i \sum_j \frac{\partial y^c}{\partial A^k_ij}
+\]
+
+Where $A^k$ is the $k$-th feature map, $y^c$ is the output for the $c$ class, and $Z$ is the number of neurons in each map.
+
+\subsection{Guided Backpropagation}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis eros ultrices libero accumsan tempus eu in lacus. Cras magna ex, congue vitae fermentum nec, interdum ac eros. Praesent egestas risus eget turpis malesuada molestie. Suspendisse commodo sollicitudin nulla eu consectetur. Etiam bibendum, enim ut pretium elementum, lorem nisl imperdiet eros, non rhoncus enim eros eget nunc. Aliquam congue nisi commodo dui imperdiet, facilisis placerat nunc venenatis. Pellentesque pharetra leo at libero suscipit vehicula. Donec pellentesque at metus vel mattis. Donec id ex eget libero efficitur lobortis non quis neque. Aliquam malesuada urna neque. Donec ut pharetra turpis, fermentum dignissim ligula. In aliquam nisi sit amet lectus posuere volutpat. Nunc in suscipit erat. Ut et pulvinar ante, id viverra orci. Suspendisse augue justo, commodo convallis magna vitae, condimentum vestibulum nisl. Vivamus justo urna, posuere vitae nibh sit amet, egestas efficitur orci. 
+\subsection{Guided GradCAM}
+
+The output of GradCAM has the dimensions of the last convolutional layer of the network, and has to be upsampled to be overlayed on top of the input image. This results in a very coarse heatmap, with rough borders and lost details. To solve this, we can multiply (pixel by pixel) the heatmap with other simpler method, as guided-backpropagation. 
+
