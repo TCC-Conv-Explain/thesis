@@ -150,8 +150,106 @@ Mathematically, a neuron can be described by the same formula in equation \ref{e
 
 \section{Convolutional Neural Networks}
 \label{sec:convolutions}
+\subsection{Convolutions}
+First, it is important to define what a convolution is. Given two discrete one-dimensional signals \(f\) and \(g\), their convolution \(f * g\) is defined as:
+\[
+(f*g)[n] = \sum_{i=-\infty}^{+\infty} f[n] g[n-i]
+\]
 
-\lipsum[5-6]
+Given two discrete two-dimensional signals \(f\) and \(g\), their convolution \(f * g\) is calculated as:
+
+\[
+(f*g)[m][n] = \sum_{i=-\infty}^{+\infty} \sum_{j=-\infty}^{+\infty} f[m][n] \cdot g[m-i][n-j]
+\]
+
+In practice, the signal \(g\) is represented by a window (or kernel), usually square and of odd size. Thus, we can abstract convolution as the multiplication of a sliding window. The picture below illustrates this process. It is important to note that the window needs to be flipped during the convolution, although this is not illustrated in the picture.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/conv.png}
+    \caption{2D Convolution}
+\end{figure}
+
+This process can be used to apply different filters to images. For example: using a \(3 \times 3\) window with all weights equal to \(\frac{1}{9}\), we can generate a filter that blurs the image (moving average). Below is an example of applying this filter:
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/blur.png}
+    \caption{Filtered Image (3x3 Mean Filter)}
+\end{figure}
+
+It is also important to note that convolution is commonly implemented in machine learning contexts as "cross-correlation," which is a very similar operation but without the flipping of the window. Note that, since the weights are learned in our case, there is no difference. Therefore, in our context, convolution and cross-correlation are synonymous.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/cross-correlation.png}
+    \caption{Comparison with Cross-Correlation}
+\end{figure}
+
+A pertinent question that can be asked is what happens at the edges of the image. When the window is sliding over them, what happens to the missing pixels? The process of filling in these pixels is called padding. Padding can be done with zeros, the nearest pixel, or not be done at all. Note that when there is no padding, the image decreases in size after convolution.
+
+Another important hyperparameter that can be adjusted is the "stride." This defines how many positions the window is moved at a time. That is: a stride value different from 1 also implies a decrease in image size after convolution.
+
+\subsection{Convolutional networks}
+
+In order to understand the need for convolutional networks, we have to understand why it's impractical to use fully-connected networks to process images. Let's walk though an example to see that. 
+
+Consider a color image with dimensions 512x512. If we were to process this image with a conventional neural network, the input layer would have \( 3 \cdot 512 \cdot 512 = 786432 \) dimensions. Assume a hidden layer with only 128 neurons (which is relatively small). Just between these two layers, there would be \( 100663296 \) parameters! This is highly inefficient.
+
+The solution to this problem is to extract features from the image, which will serve as input to the network. These features could include various aspects such as symmetry, black levels, contrast, presence or absence of patterns, etc. All of these features will serve as input to the network. As a result, we can reduce the input layer's dimensionality from several hundred thousand to just a few dozen.
+
+
+However, a challenge still remains: how do we select these features? We can apply convolutions to the image to calculate interesting features, and these convolutions can be learned alongside the rest of the network! It is important to understand some essential details about these networks before proceeding. Each convolutional layer has three dimensions: height, width, and the number of channels. The input layer typically has one channel for black and white images, or three channels for color images.
+
+Each channel in each convolutional layer combines all the channels from the previous layer. In other words, the "windows" used have weights for all the channels. These windows slide over the data from the previous layer to generate \textbf{one channel} in the next layer.
+
+Let us consider an example. Suppose we have a network that processes color images of size \( 128 \times 128 \) pixels. This network has 3 convolutional layers with 16, 32, and 64 channels per layer, respectively. Assume a window size of 3 for all layers. In this case, we have:
+
+\begin{itemize}
+    \item First layer: window size is \( 3 \times 3 \times 3 \). With 16 output channels, we will have 
+    \[
+    16 \cdot 3 \cdot 3 \cdot 3 = 432 \text{ parameters.}
+    \]
+    \item Second layer: window size is \( 3 \times 3 \times 16 \). With 32 output channels, we will have 
+    \[
+    32 \cdot 3 \cdot 3 \cdot 16 = 4608 \text{ parameters.}
+    \]
+    \item Third layer: window size is \( 3 \times 3 \times 32 \). With 64 output channels, we will have 
+    \[
+    64 \cdot 3 \cdot 3 \cdot 32 = 18432 \text{ parameters.}
+    \]
+\end{itemize}
+
+
+Another important detail is the output dimension of each layer. This depends on whether or not \textbf{padding} is used. \textbf{Padding} refers to how the layer behaves at the image edges. We can complete the image with zeros, the nearest pixel value, or the pixel value from the opposite edge of the image. If padding is not used, the output dimensions will decrease by \( 2 \lfloor \frac{W}{2} \rfloor \), where \( W \) is the window size. For instance, with a window size of 3, each layer will reduce the image size by 2 pixels. If the input is \( 128 \times 128 \), the output of the first layer will be \( 126 \times 126 \), the second layer will output \( 124 \times 124 \), and so on.
+
+\subsection{Pooling}
+
+Remember, each convolution extracts a feature from the image. Therefore, when we perform another convolution using the outputs from the previous layer, we are combining features extracted from the image to compute new features. As a result, deeper layers extract more complex features from the image. For instance, the first layer may extract features like the presence of vertical straight lines, while the tenth layer may extract features like "presence of dog snouts."
+
+Thus, the features involved gradually become less localized and more global (pertaining to the entire image). This is why it is useful to summarize information into smaller dimensions as the network deepens.
+
+To accomplish this, we use "pooling" layers. These layers work similarly to convolutions: windows slide over the data and compute an output based on nearby pixels. However, this time, a function is used to aggregate these data. Common functions include "max" (maximum value) and "avg" (average value).
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{figuras/max_pool.png}
+\end{center}
+
+\subsection{Receptive Field}
+
+An important concept for understanding the power of \textbf{deep convolutional networks} is the \textbf{receptive field}. This concept relates to the power that chained convolutions have.
+
+Consider an input image. Apply a \( 3 \times 3 \) convolution to it. Now, apply another \( 3 \times 3 \) convolution to the output of the first convolution. Observe this output image. How much information does each pixel contain about its neighbors?
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{figuras/receptive_field.png}
+\end{center}
+
+The answer is that each pixel contains information from a region of size \( 5 \times 5 \) around it! This is the receptive field of these neurons.
+
+A common misconception is that, since the receptive field of two \( 3 \times 3 \) convolutions is \( 5 \times 5 \), two \( 3 \times 3 \) convolutions have the same \textbf{expressive power} as a \( 5 \times 5 \) convolution. This \textbf{is not} true. A \( 5 \times 5 \) convolution has 25 parameters, while two chained \( 3 \times 3 \) convolutions only have 18 parameters.
+
+
 
 
 
