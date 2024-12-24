@@ -123,11 +123,43 @@ for \(i \in \{1, \cdots, n\}\) and
 where \(\eta\) is the \emph{learning rate} hyperparameter and \(t\) is the update iteration number.
 
 As a linear model, the Perceptron can only model linear problems, which only represent a small subset of real world problems.
-As a solution, researchers started combining Perceptrons in a layered structure. 
-The multiple layers consisting of multiple Perceptrons created a structure capable of representing more complex functions, or more specifically, \emph{any continuous function}.
-Such architecture is called a \emph{Multilayer Perceptron} (MLP). Neural Networks are considered \emph{"softened" MLPs}\footnote{Terminology used by Professor Yaser Abu-Mostafa, in the famous Machine Learning Book \emph{Learning from Data}. Source: https://work.caltech.edu/telecourse}, 
-which means that those models use differentiable activation functions that allow for gradient-based optimization, using algorithms like the \emph{Gradient Descent}.
+As a solution, researchers started combining Perceptrons in a layered structure, called Multilayer Perceptron.
 
+\subsection{Multilayer Perceptron}
+
+By stacking multiple Perceptrons into multiple layers, one can build more complex decision boundaries and model more complex functions. 
+For example, by using the Multilayer Perceptron, one can model a XOR function: 
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{figuras/xor_problem.png}
+    \caption{The XOR Problem Font: \emph{Kevin Swingler Lecture Notes}. \label{fig:xor_problem}}
+\end{figure}
+
+The XOR problem can not be solved by using a single Perceptron, since it is not a linear problem.
+However, by using two Perceptrons (which corresponds to the two lines in the figure), one can model the non-linear XOR problem.  
+In this specific example, one can define the uppermost line as the decision boundary of the Perceptron \(f_1(x) = \sigma(- x_1 - x_2 + 1.5)\) and the lowermost line as the decision boundary of the Perceptron \(f_2(x) = \sigma(x_1 + x_2 - 0.5)\).
+Considering the Perceptrons \(f_1\) and \(f_2\), we can create a new Perceptron that receives the outputs of those Perceptrons and returns the result of the XOR function. 
+For example, we can define the Perceptron \(g(x) = \sigma(x_1 + x_2 - 1.5)\), generating the following results:
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $x_1$ & $x_2$ & $f_1(x)$ & $f_2(x)$ & $g(f_1(x), f_2(x))$ \\ \hline
+    0     & 0     & 1     & 0     & 0   \\ \hline
+    0     & 1     & 1     & 1     & 1   \\ \hline
+    1     & 0     & 1     & 1     & 1   \\ \hline
+    1     & 1     & 0     & 1     & 0   \\ \hline
+    \end{tabular}
+    \caption{Perceptron output for binary combinations of \(x_1\) and \(x_2\).}
+    \label{tab:xor_table}
+\end{table}
+
+\noindent Showing that the non-linear problem can be successfully be solved by the Multilayer Perceptron.
+
+Although the Multilayer Perceptron has the perk of being able to model complex functions, we are still limited by how to model is trained, since it cannot be trained by using the update rule of the traditional Perceptron.
+
+By using a technique known as Backpropagation, the Multilayer Perceptron can be trained using gradient-based update rules, like the Gradient Descent.
 \subsection{How Neural Networks Work}
 
 Neural Networks work by using multiple Perceptrons with differentiable activation functions grouped in a layered structure in order to model complex functions. 
