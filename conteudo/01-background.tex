@@ -160,25 +160,24 @@ For example, we can define the Perceptron \(g(x) = \sigma(x_1 + x_2 - 1.5)\), ge
 Although the Multilayer Perceptron has the perk of being able to model complex functions, we are still limited by how to model is trained, since it cannot be trained by using the update rule of the traditional Perceptron.
 
 By using a technique known as Backpropagation, the Multilayer Perceptron can be trained using gradient-based update rules, like the Gradient Descent.
-\subsection{How Neural Networks Work}
 
-Neural Networks work by using multiple Perceptrons with differentiable activation functions grouped in a layered structure in order to model complex functions. 
-Such model's architecture can be described by Figure \ref{fig:neural-network} in a network similar to a graph.
+\subsection{Backpropagation}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.5]{figuras/Neural-Networks-Architecture.png}
-    \caption{Neural Network Architecture. Font: \emph{Geeks For Geeks\footnotemark}. \label{fig:neural-network}}
-\end{figure}
-\footnotetext{https://www.geeksforgeeks.org/artificial-neural-networks-and-its-applications/}
+In order to find the weight's gradients of our MLP, one can use Backpropagation, a technique that involves computing those gradients by performing a \emph{Forward Pass} and a \emph{Backward Pass} on the Neural Network.
 
-% TODO: Esse parágrafo n está 100% certo, já que nem todo nó do grafo representa um neurônio da rede, ou, um perceptron.
-Each node of such graph represents a \emph{neuron}, which is a single Perceptron model with each edge representing an output of a neuron being passed to another neuron as input.
-Each edge will have a weight associated to it, representing the importance of a neuron from a previous layer. 
-Inference in this model is called \emph{Forward Propagation}, where the input is passed in the \emph{Input Layer} and is computed by calculating a Perceptron's output and passing it to the next layer, until the \emph{Output Layer} is reached.
-Layers in between are called \emph{Hidden Layers}.
+\subsubsection{Forward Pass}
 
-Mathematically, a neuron can be described by the same formula in equation \ref{eq:perceptron}, but with a different activation function.
+The Forward Pass basically consists in computing the input through the network and comparing the output with the expected value using a loss function \(\mathcal{L}\).
+During the forward pass, the output of each layer is stored in memory to be later used in the Backward Pass.
+
+\subsubsection{Backward Pass}
+
+In the Backward Pass, the gradients of the loss with respect to the weights are calculated to update the network. 
+By using the chain rule, one can start off by calculating the gradients of the last layer of the network, and then use the result to calculate the gradients of the weights of the previous layer, \emph{going on the opposite direction of the Forward Pass}.
+
+\subsubsection{Updating Weights}
+
+With the gradients of the loss with respect to the weights calculated, now the weights are updated in an iterative process, until a satisfiable loss/accuracy is achieved or new model/dataset tunning is necessary. 
 
 \section{Convolutional Neural Networks}
 \label{sec:convolutions}
