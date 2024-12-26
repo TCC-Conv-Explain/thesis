@@ -100,8 +100,8 @@ Where the weights \(w_i\) for \(i \in \{0, 1, \cdots, n\}\) are trainable parame
     \label{eq:step_function_perceptron}    
 \end{equation}
 
-Therefore, the Perceptron model can be defined as the function \(f \colon \mathbb{R}^n \to \{0, 1\}\) where
-
+Therefore, the Perceptron model can be defined as the function\footnotemark \(f \colon \mathbb{R}^n \to \{0, 1\}\) where
+\footnotetext{The independent term \(w_0\) is usually called the \emph{bias} of the Perceptron (or neuron)}
 \begin{equation}
     f(x) = \sigma(w_0 + \sum_{i = 1}^{n} w_i x_i).
     \label{eq:perceptron}
@@ -114,16 +114,16 @@ The Perceptron model updates its parameters using each sample \((x, y)\) of the 
     \label{eq:perceptron_update}  
 \end{equation}
 
-for \(i \in \{1, \cdots, n\}\) and
+\noindent for \(i \in \{1, \cdots, n\}\) and
 
 \begin{equation}
     w_0^{t + 1} = w_0^t + \eta \; (y - f(x)),  
 \end{equation}
 
-where \(\eta\) is the \emph{learning rate} hyperparameter and \(t\) is the update iteration number.
+\noindent where \(\eta\) is the \emph{learning rate} hyperparameter and \(t\) is the update iteration number.
 
 As a linear model, the Perceptron can only model linear problems, which only represent a small subset of real world problems.
-As a solution, researchers started combining Perceptrons in a layered structure, called Multilayer Perceptron.
+As a solution, researchers started combining Perceptrons in a layered structure, called Multilayer Perceptron, also famously known as \emph{Neural Networks}.
 
 \subsection{Multilayer Perceptron}
 
