@@ -35,14 +35,23 @@ Recently popular \emph{Deep Learning Models} are one kind of \emph{Explainable M
 
 \subsection{Why Explainable AI is Necessary}
 
-Creating explanations to a model's decisions can yield many advantages, including increase in model trust, more ethical and fair decisions, correctly following regulatory compliances and easier model debugging.
+Creating explanations to a model's decisions can yield many advantages, including  more ethical and fair decisions, correctly following regulatory compliances and easier model debugging.
 
-While Debugging, Machine Learning models can have quite unpredictable behavior, detecting biases not initially noticed by humans. This can yield great performance in the training or even validation and test datasets,
-but poor performance in real world deployment. For example, while training an image classifier on dog and cat images one can find great accuracy on classification of dogs over green fields. However, 
-when analyzing what regions of the image a model "sees" for the prediction, researchers may find out that the model is actually looking at the image background, 
-since dog owners tend to take their pets for walks more often than cat owners, therefore making dog pictures with a green background more likely than pictures with cats over green fields. 
-Visualizing regions of images that our vision model "sees" is only possible with Explainable AI techniques, such as GradCAM \citep{Selvaraju_2019} and other Gradient Saliency methods.
+To ensure ethical and fair decision-making, Machine Learning systems must provide justifiable decisions, as they often exploit discriminatory patterns to enhance accuracy, which can perpetuate harmful biases. 
+For instance, the COMPAS algorithm, used in U.S. courts to assess recidivism risk, was analyzed by ProPublica\footnotemark and found to exhibit significant bias against Black defendants, frequently overestimating their likelihood of reoffending compared to their actual risk.
+\footnotetext{\emph{"How We Analyzed the COMPAS Recidivism Algorithm", by ProPublica: https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm}}
 
+Explainable AI (XAI) is sometimes a mandatory requirement, particularly under regulations like the United Kingdom's General Data Protection Regulation (GDPR). 
+The GDPR mandates that organizations must provide clear and understandable explanations for decisions that significantly impact individuals, especially those made by automated systems commonly powered by Machine Learning algorithms. 
+Without XAI, high-stakes decisions cannot leverage such models in the United Kingdom, highlighting the crucial role of explainability in enabling the broader adoption of Machine Learning for real-world applications while ensuring compliance and fairness.
+
+When debugging Machine Learning models, their behavior can often be unpredictable, revealing biases that may not have been initially apparent to humans. 
+These biases can result in high performance on training, validation, or even test datasets but lead to poor performance in real-world deployment. 
+For instance, consider training an image classifier to differentiate between dog and cat images. 
+The model may achieve impressive accuracy on images of dogs in green fields. 
+However, upon examining the regions of the image the model relies on for its predictions, researchers might discover that it focuses on the background rather than the animals themselves. 
+This happens because dog owners are more likely to photograph their pets outdoors, leading to an unintended association between dogs and green backgrounds. 
+Techniques from Explainable AI, such as Grad-CAM \citep{Selvaraju_2019} and Gradient Saliency methods, enable researchers to visualize these image regions, providing critical insights into model behavior and helping to address such biases.
 
 \section{Gradient Descent}
 
