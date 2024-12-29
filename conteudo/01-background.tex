@@ -54,6 +54,7 @@ This happens because dog owners are more likely to photograph their pets outdoor
 Techniques from Explainable AI, such as Grad-CAM \citep{Selvaraju_2019} and Gradient Saliency methods, enable researchers to visualize these image regions, providing critical insights into model behavior and helping to address such biases.
 
 \section{Gradient Descent}
+\label{sec:gradient_descent}
 
 Let \(f\colon A \to B\) where \(A \subseteq \mathbb{R}^n\) for \(n \in \mathbb{N}\) and \(B \subseteq \mathbb{R^+}\). Suppose we want to find the solution to the optimization problem
 
@@ -68,14 +69,13 @@ Therefore, one can define an initial random value for \(x\) and update \(x\) usi
 We can define such method using the following formula, where \(x_t\) represents the value of \(x\) at iteration \(t\) of the algorithm:
 
 \begin{equation}
-    x_{t + 1} = x_t - \eta \frac{\partial f}{\partial x}.
+    x_{t + 1} = x_t - \eta \frac{\partial f (x_t)}{\partial x_t}.
     \label{eq:gradient_descent}  
 \end{equation}
 
 The term \(\eta\) is often called the \emph{learning rate} used in the Gradient Descent method and is often defined manually by the user.
 
 The Gradient Descent method can be used to optimize a neural network's parameters to solve a given problem using a \emph{loss function}. 
-% TODO: Devo adicionar menção que vamos usar isso também com Feature Visualization?
 
 \section{Neural Networks}
 
