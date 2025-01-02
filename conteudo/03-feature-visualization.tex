@@ -44,6 +44,57 @@ In contrast, using a random image may be better suited for discovering unknown f
 
 Like most optimization problems, the Feature Visualization problem doesn't strictly have a single optimal solution, but rather multiple viable solutions that maximize the given set of neurons.
 For example, a set of seemingly random images may activate a neuron fully while at the same time an image of a cute dog may also activate this same neuron to its maximum value.
-Directly applying \emph{Gradient Ascent} to random images without additional techniques often produces images that poorly align with human perception. This outcome occurs not because human-aligned images fail to maximize the neuron's value, but because solutions comprising seemingly random pixels are closer to the algorithm's initial state.
+Directly applying \emph{Gradient Ascent} to random images without additional techniques often produces images that poorly align with human perception. This outcome occurs not because human-aligned images fail to maximize the neuron's value, but because solutions comprising seemingly random pixels are closer to the image's initial state.
 
 % TODO: Acho que seria legal colocar por aqui uma imagem aleatória e a mesma imagem com feature visualization usando diretamente apenas Gradient Ascent, sem piramides
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.28\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/random_image.png}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.28\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/random_image_dream.png}
+        \caption{Feature Visualization of Convolution layer 22 of VGG16}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.28\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/random_image_dream_class_250.png}
+        \caption{Feature Visualization of Siberian Husky (IMAGENET index 250) neuron of VGG16}
+    \end{subfigure}
+
+    \caption{
+        Feature Visualization images using solely Gradient Ascent. 
+    Little human-recognizable features are present in the resulting images
+    }
+\end{figure}
+
+To identify human-aligned features in our models, we need effective techniques for generating images that closely correspond to those features. A closer examination reveals that Feature Visualization using solely Gradient Ascent typically produces features that occupy only small portions of the final image.
+
+To expand these features across a larger area and create more intricate forms, we can downscale the image and apply the Gradient Ascent step. Once the downscaled image has been refined, it can be upscaled by a specific factor, and Gradient Ascent can be reapplied. Repeating this process until the image reaches its original size enables the generation of more detailed and compelling results, as demonstrated below:
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/random_image_dream_pyramid.png}
+        \caption{Feature Visualization of Convolution layer 22 of VGG16}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/random_image_dream_pyramid_class_250.png}
+        \caption{Feature Visualization of Siberian Husky (IMAGENET index 250) neuron of VGG16}
+    \end{subfigure}
+\end{figure}
