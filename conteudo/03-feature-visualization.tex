@@ -77,9 +77,14 @@ Directly applying \emph{Gradient Ascent} to random images without additional tec
     }
 \end{figure}
 
-To identify human-aligned features in our models, we need effective techniques for generating images that closely correspond to those features. A closer examination reveals that Feature Visualization using solely Gradient Ascent typically produces features that occupy only small portions of the final image.
+To identify human-aligned features in our models, we need effective techniques for generating images that closely correspond to those features. 
+A closer examination reveals that Feature Visualization using solely Gradient Ascent typically produces features that occupy only small portions of the final image.
 
-To expand these features across a larger area and create more intricate forms, we can downscale the image and apply the Gradient Ascent step. Once the downscaled image has been refined, it can be upscaled by a specific factor, and Gradient Ascent can be reapplied. Repeating this process until the image reaches its original size enables the generation of more detailed and compelling results, as demonstrated below:
+To expand these features across a larger area and create more intricate forms, we can downscale the image and apply the Gradient Ascent step. 
+Once the downscaled image has been refined, it can be upscaled by a specific factor, and Gradient Ascent can be reapplied. 
+\newpage
+\noindent
+Repeating this process until the image reaches its original size enables the generation of more detailed and compelling results, as demonstrated below:
 
 \begin{figure}
     \captionsetup{justification=centering}
@@ -89,6 +94,7 @@ To expand these features across a larger area and create more intricate forms, w
         \centering
         \includegraphics[width=.7\linewidth]{figuras/random_image_dream_pyramid.png}
         \caption{Feature Visualization of Convolution layer 22 of VGG16}
+        \label{fig:feat_conv_L22_pyramid}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.45\textwidth}
@@ -96,5 +102,8 @@ To expand these features across a larger area and create more intricate forms, w
         \centering
         \includegraphics[width=.7\linewidth]{figuras/random_image_dream_pyramid_class_250.png}
         \caption{Feature Visualization of Siberian Husky (IMAGENET index 250) neuron of VGG16}
+        \label{fig:feat_conv_I250_pyramid}
     \end{subfigure}
+
+    \caption{By employing Gradient Ascent across multiple image scales, we achieve results that align more closely with human perception. In Figure \ref{fig:feat_conv_L22_pyramid}, eye-like structures frequently emerge in the generated images, while in Figure \ref{fig:feat_conv_I250_pyramid}, fur-like textures dominate—patterns strongly reminiscent of a Siberian Husky's coat.}
 \end{figure}
