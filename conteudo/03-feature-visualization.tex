@@ -169,7 +169,45 @@ We can import the model with pretrained weights with the code bellow:
     \caption{Loading pretrained VGG16 model}
 \end{program}
 
+Now, we need to define a way to track activations of certain layers or neurons of the network in order optimize the Feature Visualization images. 
+In Pytorch, we can define \emph{Hooks}, which will update every time a forward pass is executed in the network. 
+In our implementation, we defined the following Hook class to track activations:
 
+\begin{program}
+    \index{Python}
+    \centering
+
+    \begin{lstlisting}[language=Python, style=wider]
+        class Hook:
+            def __init__(self, model_layer: Sequential):
+                self.hook = model_layer.register_forward_hook(self.hook_fn)
+
+            def hook_fn(self, _, input: Tensor, output: Tensor):
+                self.input = input
+                self.output = output
+            
+            def close(self):
+                self.hook.remove()
+    \end{lstlisting}
+
+    \caption{Hook Class}
+\end{program}
+
+\noindent Where activations can be retrieved after each forward pass by checking the hook's output:
+
+\begin{program}
+    \index{Python}
+    \centering
+
+    \begin{lstlisting}[language=Python, style=wider]
+        model = vgg16(weights=VGG16_Weights.IMAGENET1K_V1)
+        hook = Hook(model.features[22])
+        model(image)        # compute forward pass in model
+        activations = hook.output       # retrieve model.features[22] activations
+    \end{lstlisting}
+
+    \caption{Hook Usage}
+\end{program}
 
 % Aplicar trecho abaixo depois de apresentar o código 
 % Applying this technique to various network neurons or layers enables us to better understand the functions and mechanisms of different layers within our neural network.
