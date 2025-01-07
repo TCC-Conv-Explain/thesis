@@ -176,7 +176,7 @@ In our implementation, we defined the following Hook class to track activations:
 \begin{program}
     \index{Python}
     \centering
-
+    \label{code:hook_class}
     \begin{lstlisting}[language=Python, style=wider]
         class Hook:
             def __init__(self, model_layer: Sequential):
@@ -198,6 +198,7 @@ In our implementation, we defined the following Hook class to track activations:
 \begin{program}
     \index{Python}
     \centering
+    \label{code:hook_usage}
 
     \begin{lstlisting}[language=Python, style=wider]
         model = vgg16(weights=VGG16_Weights.IMAGENET1K_V1)
