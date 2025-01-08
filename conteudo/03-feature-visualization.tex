@@ -210,5 +210,96 @@ In our implementation, we defined the following Hook class to track activations:
     \caption{Hook Usage}
 \end{program}
 
+\newpage
+Using hooks, the Gradient Ascent step can now be implemented:
+
+\begin{program}
+    \index{Python}
+    \centering
+    \label{code:gradient_ascent_step}
+
+    \begin{lstlisting}[language=Python, style=wider]
+        def gradient_ascent_step(
+            image: torch.Tensor,
+            model: torch.nn.Module,
+            hook: Hook,
+            learning_rate: float
+            ) -> torch.Tensor:
+            
+            blur = GaussianBlur(kernel_size=7, sigma=0.9)
+            image = blur(image)
+
+            image.requires_grad_()
+            
+            model(image)
+            activations = hook.output
+
+            loss = (activations**2).sum()
+
+            loss.backward()
+            normalized_grad = (image.grad - image.grad.mean()) / image.grad.std()
+
+            image.grad.zero_()
+            image = image.detach()
+            image += learning_rate * normalized_grad
+
+            return image
+    \end{lstlisting}
+
+    \caption{Gradient Ascent Step with Normalization}
+\end{program}
+
+\noindent The algorithm begins by applying a blur to the input image in lines 8 and 9 to regularize the results, producing a smoother and less noisy output, as discussed in the previous section.
+Next, gradient computation is enabled for the image in line 11, a necessary step for handling PyTorch tensors.
+Following this, the activations in the layer are calculated and aggregated into a single value in lines 13 to 16, which is then used to compute the gradient.
+Finally, the gradient is computed in line 18, normalized in line 19, and the image is updated in line 23, completing one step of Gradient Ascent.
+
+Now, we can compute Gradient Ascent through mulitple iterations with multiple image scales, until we are satisfied with the results. 
+
+\begin{program}
+    \index{Python}
+    \centering
+    \label{code:feat_visualization}
+
+    \begin{lstlisting}[language=Python, style=wider]
+        def deepdream(
+            image: torch.Tensor,
+            model: torch.nn.Module,
+            model_layer: torch.nn.Module,
+            pyramid_levels=6,
+            growth_rate=1.8,
+            steps=20,
+            learning_rate=9e-2,
+            classification_index=None
+        ) -> torch.Tensor:
+        
+        normalizer = Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD)
+        denormalizer = DeNormalize(mean=IMAGENET_MEAN, std=IMAGENET_STD)    # Reverts Normalization
+
+        original_image_size = image.size()[-2:] # Get height and width of image
+        initial_image_size = get_initial_image_size(original_image_size, pyramid_levels, growth_rate)
+        current_image_size = initial_image_size
+        hook = Hook(model_layer, backward=False)
+        
+        image = normalizer(image)
+        for pyramid_level in tqdm(range(pyramid_levels)):
+            resizer = Resize(current_image_size, antialias=True)
+            image = resizer(image)
+
+            for _ in tqdm(range(steps), leave=False):
+                image = gradient_ascent_step(image, model, hook, learning_rate, classification_index)
+            
+            image = image.detach()
+
+            current_image_size = get_new_image_size(initial_image_size, pyramid_level, growth_rate)
+        
+        image = denormalizer(image)
+        image = image.clamp(0, 1)
+        return image
+    \end{lstlisting}
+
+    \caption{Feature Visualization}
+\end{program}
+
 % Aplicar trecho abaixo depois de apresentar o código 
 % Applying this technique to various network neurons or layers enables us to better understand the functions and mechanisms of different layers within our neural network.
