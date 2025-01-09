@@ -293,5 +293,32 @@ Now, we can compute Gradient Ascent through mulitple iterations with multiple im
 In simple terms, we create an \emph{Resizer} object responsible to rescale the image on every step of the outer for loop (line 16). 
 Then, we bind the hook to the desired model layer in line 13 and process the image for each image size computed in line 16 and for the desired amount of Gradient Ascent steps for each iteration.
 After the process, the image is clamped back to the interval \([0, 1]\), since the Gradient Ascent steps can bring the generated image pixels out of the interval.
+
+\section{Experiments}
+
+In this section, we present a series of experiments conducted to evaluate and demonstrate the effectiveness of feature visualization techniques. 
+These experiments are designed to highlight the interpretability of the learned features in deep neural networks, analyze their behavior across different layers and architectures, and explore their potential applications. 
+Through these experiments, we aim to provide both qualitative and quantitative insights into the representational power and limitations of feature visualization.
+
+The experiments in this section are performed using the VGG16 convolutional neural network (CNN) architecture, pre-trained on the ImageNet dataset. 
+The hyperparameters will be carefully optimized to produce results that closely align with human interpretability and understanding.
+
+\subsection{Layer-Wise Visualization}
+
+
+To create feature visualization images that capture the most significant features of an entire layer, we compute the gradient of the sum of all neuron activations within that layer. This approach highlights the collective importance of features across the layer.
+As an initial example, feature visualization images were generated for Layer 22 of the VGG16 architecture, as shown in Figures \ref{fig:feat_conv_L22_pyramid} and \ref{fig:feat_conv_L22_reg}.
+Next, we will extend this exploration to various layers of the network to analyze how features evolve throughout the architecture.
+
+\subsubsection{Initial Layers (1-4)}
+
+\subsubsection{Initial Layers (5-10)}
+
+\subsubsection{Final Layers (11-14)}
+
+\subsection{Class Visualization}
+
+\subsection{Feature Visualization in Non-Random Initial Images}
+
 % Aplicar trecho abaixo depois de apresentar o código 
 % Applying this technique to various network neurons or layers enables us to better understand the functions and mechanisms of different layers within our neural network.
