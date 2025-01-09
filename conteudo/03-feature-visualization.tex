@@ -254,6 +254,7 @@ Next, gradient computation is enabled for the image in line 11, a necessary step
 Following this, the activations in the layer are calculated and aggregated into a single value in lines 13 to 16, which is then used to compute the gradient.
 Finally, the gradient is computed in line 18, normalized in line 19, and the image is updated in line 23, completing one step of Gradient Ascent.
 
+\newpage
 Now, we can compute Gradient Ascent through mulitple iterations with multiple image scales, until we are satisfied with the results. 
 
 \begin{program}
@@ -262,38 +263,26 @@ Now, we can compute Gradient Ascent through mulitple iterations with multiple im
     \label{code:feat_visualization}
 
     \begin{lstlisting}[language=Python, style=wider]
-        def deepdream(
+        def feature_visualization(
             image: torch.Tensor,
             model: torch.nn.Module,
             model_layer: torch.nn.Module,
-            pyramid_levels=6,
-            growth_rate=1.8,
-            steps=20,
-            learning_rate=9e-2,
-            classification_index=None
-        ) -> torch.Tensor:
+            pyramid_levels: int,
+            growth_rate: float,
+            steps: int,
+            learning_rate: float
+        ) -> torch.Tensor: 
         
-        normalizer = Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD)
-        denormalizer = DeNormalize(mean=IMAGENET_MEAN, std=IMAGENET_STD)    # Reverts Normalization
+        resizer = Resizer(pyramid_levels, image)
 
-        original_image_size = image.size()[-2:] # Get height and width of image
-        initial_image_size = get_initial_image_size(original_image_size, pyramid_levels, growth_rate)
-        current_image_size = initial_image_size
         hook = Hook(model_layer, backward=False)
         
-        image = normalizer(image)
-        for pyramid_level in tqdm(range(pyramid_levels)):
-            resizer = Resize(current_image_size, antialias=True)
-            image = resizer(image)
+        for pyramid_level in range(pyramid_levels):
+            image = resizer.resize(image, pyramid_level)
 
-            for _ in tqdm(range(steps), leave=False):
-                image = gradient_ascent_step(image, model, hook, learning_rate, classification_index)
+            for _ in range(steps):
+                image = gradient_ascent_step(image, model, hook, learning_rate)
             
-            image = image.detach()
-
-            current_image_size = get_new_image_size(initial_image_size, pyramid_level, growth_rate)
-        
-        image = denormalizer(image)
         image = image.clamp(0, 1)
         return image
     \end{lstlisting}
@@ -301,5 +290,8 @@ Now, we can compute Gradient Ascent through mulitple iterations with multiple im
     \caption{Feature Visualization}
 \end{program}
 
+In simple terms, we create an \emph{Resizer} object responsible to rescale the image on every step of the outer for loop (line 16). 
+Then, we bind the hook to the desired model layer in line 13 and process the image for each image size computed in line 16 and for the desired amount of Gradient Ascent steps for each iteration.
+After the process, the image is clamped back to the interval \([0, 1]\), since the Gradient Ascent steps can bring the generated image pixels out of the interval.
 % Aplicar trecho abaixo depois de apresentar o código 
 % Applying this technique to various network neurons or layers enables us to better understand the functions and mechanisms of different layers within our neural network.

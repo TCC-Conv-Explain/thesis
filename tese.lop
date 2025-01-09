@@ -1,3 +1,5 @@
 \contentsline {program}{\numberline {3.1}{\ignorespaces Loading pretrained VGG16 model\relax }}{18}{program.caption.20}%
 \contentsline {program}{\numberline {3.2}{\ignorespaces Hook Class\relax }}{18}{program.caption.21}%
 \contentsline {program}{\numberline {3.3}{\ignorespaces Hook Usage\relax }}{18}{program.caption.22}%
+\contentsline {program}{\numberline {3.4}{\ignorespaces Gradient Ascent Step with Normalization\relax }}{19}{program.caption.23}%
+\contentsline {program}{\numberline {3.5}{\ignorespaces Feature Visualization\relax }}{20}{program.caption.24}%
