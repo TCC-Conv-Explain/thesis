@@ -312,8 +312,6 @@ Next, we will extend this exploration to various layers of the network to analyz
 
 \subsubsection{Initial Layers (1-5)}
 
-Intuitively, the initial layers of a CNN capture more simple features from images, like edges and simple formats.
-From our experiments, we can confirm this hypothesis by showing that generated images yield simple patterns of edges and lines.
 
 \begin{figure}
     \captionsetup{justification=centering}
@@ -322,25 +320,25 @@ From our experiments, we can confirm this hypothesis by showing that generated i
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/initial/l1/random_image_pl1_lr4e-1_layer0_no-blur.png}
-        \caption{}
+        \caption{No Multiscaling, No Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/initial/l1/random_image_pl4_lr4e-2_layer0_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/initial/l1/random_image_pl4_lr4e-2_layer0.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
 
     \caption{Layer 1}
-
+    \label{fig:layer_1}
 \end{figure}
 
 \begin{figure}
@@ -350,25 +348,25 @@ From our experiments, we can confirm this hypothesis by showing that generated i
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/initial/l3/random_image_pl1_lr4e-1_layer5_no-blur.png}
-        \caption{}
+        \caption{No Multiscaling, No Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/initial/l3/random_image_pl4_lr4e-2_layer5_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/initial/l3/random_image_pl4_lr4e-2_layer5.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
 
     \caption{Layer 3}
-
+    \label{fig:layer_3}
 \end{figure}
 
 \newpage
@@ -379,19 +377,24 @@ From our experiments, we can confirm this hypothesis by showing that generated i
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/initial/l5/random_image_pl4_lr2.2e-1_layer10.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, Blurring, \(learning\_rate = 0.22\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.48\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/initial/l5/random_image_pl4_lr8e-2_layer10.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, Blurring, \(learning\_rate = 0.08\)}
     \end{subfigure}
 
     \caption{Layer 5}
-
+    \label{fig:layer_5}
 \end{figure}
+
+Intuitively, the initial layers of a CNN capture more simple features from images, like edges and simple formats.
+By analyzing the generated images, one can clearly notice the complexity enhancement throughout the layers of the network. 
+For layer 1 (Figure \ref{fig:layer_1}), the generated images mainly focus on maximizing a color value similar to blue, probably correlated to the color distribution of the images on ImageNet.
+However, in layers 3 (Figure \ref{fig:layer_3}) and 5 (Figure \ref{fig:layer_5}) some patterns are already noticeable in the figures, with patterns similar to lines and curves being created.
 
 \subsubsection{Intermediary Layers (6-9)}
 
