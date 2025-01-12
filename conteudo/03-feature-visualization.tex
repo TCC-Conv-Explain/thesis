@@ -488,27 +488,28 @@ However, in layers 3 (Figure \ref{fig:layer_3}) and 5 (Figure \ref{fig:layer_5})
 
 From our experiments, we can observe that complex features emerge from intermediary layers, with eye-like patterns appearing in Figures \ref{fig:layer_8} and \ref{fig:layer_9}, probably related to the huge amount of animal pictures in the training dataset.
 Also, curves and circles are way more present in this layer range, showing that the network learned throughout its layers to maximize its activation to more \emph{curvy patterns}, since real life pictures tend to have less linear line segments. 
+
 \subsubsection{Final Layers (10-13)}
 
 \begin{figure}
     \captionsetup{justification=centering}
     
-    \begin{subfigure}[t]{0.48\textwidth}
+    \begin{subfigure}[t]{0.42\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l10/random_image_pl4_lr4e-2_layer21_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.48\textwidth}
+    \begin{subfigure}[t]{0.42\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l10/random_image_pl4_lr4e-1_layer21.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     
     \caption{Layer 10}
-    
+    \label{fig:layer_10}
 \end{figure}
 
 \begin{figure}
@@ -518,38 +519,38 @@ Also, curves and circles are way more present in this layer range, showing that 
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l12/random_image_pl4_lr4e-1_layer26_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l12/random_image_pl4_lr4e-2_layer26_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l12/random_image_pl4_lr2.2e-1_layer26.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, Blurring, \(learning\_rate = 0.22\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l12/random_image_pl4_lr4e-1_layer26.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l12/random_image_pl6_lr1e-1_layer26.png}
-        \caption{}
+        \caption{6 Layer Multiscaling, Blurring, \(learning\_rate = 0.1\)}
     \end{subfigure}
 
     \caption{Layer 12}
-
+    \label{fig:layer_12}
 \end{figure}
 
 \newpage
@@ -560,26 +561,31 @@ Also, curves and circles are way more present in this layer range, showing that 
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l13/random_image_pl1_lr4e-1_layer28_no-blur.png}
-        \caption{}
+        \caption{No Multiscaling, No Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l13/random_image_pl6_lr8e-2_layer28_blur-0.4.png}
-        \caption{}
+        \caption{6 Layer Multiscaling, Blurring, \(learning\_rate = 0.08\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/final/l13/random_image_pl6_lr1e-1_layer28_blur-0.4.png}
-        \caption{}
+        \caption{6 Layer Multiscaling, Blurring, \(learning\_rate = 0.1\)}
     \end{subfigure}
 
     \caption{Layer 13}
-
+    \label{fig:layer_13}
 \end{figure}
+ 
+On the final layers of the network, it is possible to see that not only complex shapes are being generated but complete forms that appear like animals are also present.
+For example, in Figure \ref{fig:layer_12}, in image (d), a pattern very close to a dog's muzzle is present close to the center of the image. 
+Also, for image (c) in the same layer, patterns bird's faces are also recognizable in the picture.
+
 \subsection{Class Visualization}
 
 \subsection{Feature Visualization in Non-Random Initial Images}
