@@ -407,25 +407,25 @@ However, in layers 3 (Figure \ref{fig:layer_3}) and 5 (Figure \ref{fig:layer_5})
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l6/random_image_pl1_lr4e-1_layer12_no-blur.png}
-        \caption{}
+        \caption{No Multiscaling, No Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l6/random_image_pl4_lr4e-2_layer12_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l6/random_image_pl6_lr2.2e-1_layer12.png}
-        \caption{}
+        \caption{6 Layer Multiscaling, Blurring, \(learning\_rate = 0.22\)}
     \end{subfigure}
     
     \caption{Layer 6}
-    
+    \label{fig:layer_6}
 \end{figure}
 \begin{figure}
     \captionsetup{justification=centering}
@@ -434,56 +434,60 @@ However, in layers 3 (Figure \ref{fig:layer_3}) and 5 (Figure \ref{fig:layer_5})
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l8/random_image_pl1_lr4e-1_layer17_no-blur.png}
-        \caption{}
+        \caption{No Multiscaling, No Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l8/random_image_pl4_lr4e-2_layer17_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l8/random_image_pl6_lr2.2e-1_layer17.png}
-        \caption{}
+        \caption{6 Layer Multiscaling, Blurring, \(learning\_rate = 0.22\)}
     \end{subfigure}
 
     \caption{Layer 8}
-
+    \label{fig:layer_8}
 \end{figure}
+
 
 \newpage
 \begin{figure}
     \captionsetup{justification=centering}
-
+    
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l9/random_image_pl1_lr4e-1_layer19.png}
-        \caption{}
+        \caption{No Multiscaling, Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l9/random_image_pl4_lr4e-1_layer19_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.4\)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.31\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/intermediary/l9/random_image_pl4_lr4e-2_layer19_no-blur.png}
-        \caption{}
+        \caption{4 Layer Multiscaling, No Blurring, \(learning\_rate = 0.04\)}
     \end{subfigure}
-
+    
     \caption{Layer 9}
-
+    \label{fig:layer_9}
+    
 \end{figure}
 
+From our experiments, we can observe that complex features emerge from intermediary layers, with eye-like patterns appearing in Figures \ref{fig:layer_8} and \ref{fig:layer_9}, probably related to the huge amount of animal pictures in the training dataset.
+Also, curves and circles are way more present in this layer range, showing that the network learned throughout its layers to maximize its activation to more \emph{curvy patterns}, since real life pictures tend to have less linear line segments. 
 \subsubsection{Final Layers (10-13)}
 
 \begin{figure}
