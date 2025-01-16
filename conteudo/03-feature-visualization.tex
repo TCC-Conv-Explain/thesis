@@ -962,5 +962,92 @@ It is possible to notice that the characteristic curve is present in multiple pa
 The images feature patterns reminiscent of melted cheese on a pizza, along with circular structures that evoke the classic pizza shape.
 \subsection{Feature Visualization in Non-Random Initial Images}
 
-% Aplicar trecho abaixo depois de apresentar o código 
-% Applying this technique to various network neurons or layers enables us to better understand the functions and mechanisms of different layers within our neural network.
+
+Feature visualization techniques can also be applied to images with non-random initial states. 
+By leveraging the methods discussed in this chapter, it becomes possible to create visuals that appear as if they were pulled directly from a \emph{dream}\footnotemark.
+The following examples showcase images generated using this technique, illustrating its ability to produce dreamlike and surreal visuals.
+
+\footnotetext{The idea of applying Feature Visualization to Non-Random Initial images became popular by a program called \emph{DeepDream}, created by Google}
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/christ-the-redeemer.jpg}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/christ-the-redeemer_li24_lr8e-2_pl4.png}
+        \caption{Feature Visualization of Image with Layer 11}
+    \end{subfigure}
+
+    \caption{Christ the Redeemer}
+    \label{fig:christ_dream}
+\end{figure}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/ime-usp.jpg}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/ime-usp_li24_lr4e-2_pl4_no-blur.png}
+        \caption{Feature Visualization of Image with Layer 11}
+    \end{subfigure}
+
+    \caption{IME-USP}
+    \label{fig:ime_dream}
+\end{figure}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/mona.jpg}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/mona_li24_lr7e-2_pl4.png}
+        \caption{Feature Visualization of Image with Layer 11}
+    \end{subfigure}
+
+    \caption{Mona Lisa}
+    \label{fig:mona_dream}
+\end{figure}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/The-Great-Wave-off-Kanagawa.png}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/The-Great-Wave-off-Kanagawa_li24_lr1e-2_pl4_no-blur.png}
+        \caption{Feature Visualization of Image with Layer 11}
+    \end{subfigure}
+
+    \caption{The Great Wave off Kanagawa}
+    \label{fig:wave_dream}
+\end{figure}
