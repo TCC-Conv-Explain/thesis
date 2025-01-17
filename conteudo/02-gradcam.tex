@@ -1,5 +1,7 @@
 \chapter{GradCAM}
 
+\section{Introduction}
+
 One of the most proeminent model-specific methods to acquire explanations for classification with CNNs is GradCAM. The intuition for the method is simple. At the last conovlutional layers, we have several channels that represent each a different feature. Those features are used by the next part of the network to produce the final output. If we want to know which parts of the image are being more useful to the network, we can look at the feature maps and observe which parts of the image are generating the signal used by the rest of the network. 
 
 The problem with this approach is that the features have informations about all the output classes. How we know what features are more important to the decision? The idea behind GradCAM is to \textbf{average the feature maps weighted by the gradient} of each channel with respect to a specific class. 
@@ -24,7 +26,7 @@ Where $A^k$ is the $k$-th feature map, $y^c$ is the output for the $c$ class, an
 
 To visualize the process, we will use the ResNet-18 \cite{resnet} trained on the ImageNet dataset, with the weights available at PyTorch. We will use as input two images of airplanes.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
     \includegraphics[width=0.4\linewidth]{gradcam/aviao2}
     \includegraphics[width=0.4\linewidth]{gradcam/aviao3}
@@ -34,7 +36,7 @@ To visualize the process, we will use the ResNet-18 \cite{resnet} trained on the
 The first step is to store the activations of the last convolutional layer of the network for each of the images. For this network, we have 512 channels at the last layer.
 
 
-\begin{figure}
+\begin{figure} [H]
     \centering
     \includegraphics[width=0.4\linewidth]{gradcam/aviao2_activations}
     \includegraphics[width=0.4\linewidth]{gradcam/aviao3_activations}
@@ -44,7 +46,7 @@ The first step is to store the activations of the last convolutional layer of th
 
 The next step is to calculate the weight of each channel, according to \cite{eq:alpha}. We can then visualize the weights as a heatmap (each vertical line represents a channel):
 
-\begin{figure}
+\begin{figure} [H]
     \centering
     \includegraphics[width=0.4\linewidth]{gradcam/aviao2_alphas}
     \includegraphics[width=0.4\linewidth]{gradcam/aviao3_alphas}
@@ -66,13 +68,13 @@ By calculating the average of the activations found at \cite{fig:actiovations} w
 
 Guided Backprogation is one of the most proeminent way of creating saliency maps. Following the same idea behind the application of the ReLU function at \cite{eq:heatmap}, we filter out negative gradients through the network, allowing the visualization of only positive influences.
 
-\begin{figure}
+\begin{figure} [H]
     \centering
     \includegraphics[width=0.8\linewidth]{gradcam/aviao2-GB}    
     \caption{Results of Guided Backpropation}
 \end{figure}
 
-\begin{figure}
+\begin{figure} [H]
     \centering
     \includegraphics[width=0.8\linewidth]{gradcam/aviao3-GB}    
     \caption{Results of Guided Backpropation}
@@ -82,7 +84,7 @@ Guided Backprogation is one of the most proeminent way of creating saliency maps
 
 The output of GradCAM has the dimensions of the last convolutional layer of the network, and has to be upsampled to be overlayed on top of the input image. This results in a very coarse heatmap, with rough borders and lost details. To solve this, we can multiply (pixel by pixel) the heatmap with other simpler method, as guided-backpropagation. 
 
-\begin{figure}
+\begin{figure} [H]
     \centering
     \includegraphics[width=0.4\linewidth]{gradcam/aviao2-GGC_RAW}
     \includegraphics[width=0.4\linewidth]{gradcam/aviao3-GGC_RAW}
@@ -93,7 +95,7 @@ The output of GradCAM has the dimensions of the last convolutional layer of the 
 \section{Implementation}
 
 All these images were generated using the Python library \href{https://pytorch.org/}{Pytorch}. The implementation used a feature of the library called hooks. Hooks are functions that can be connected to the network. Those hooks will be called either at the forward pass (for forward hooks), or at the backward pass (for backward hooks). We used those hooks to register the activations and the gradient at GradCAM, and to filter out negative gradients at Guided Backpropagation.
-\begin{program}
+\begin{program} [H]
     \index{Python}
     \centering
     \label{code:gradcam_class}
@@ -136,7 +138,7 @@ All these images were generated using the Python library \href{https://pytorch.o
     
 \end{program}
 
-\begin{program}
+\begin{program}[H]
     \index{Python}
     \centering
     \label{code:gbp_class}
@@ -183,7 +185,7 @@ class GuidedBackPropagation:
 
 Following is an example of the utilization of those classes:
 
-\begin{program}
+\begin{program}[H]
     \index{Python}
     \centering
     \label{code:using_gc_gbp}
@@ -213,7 +215,37 @@ bp = [gb.forward(tensor.requires_grad_()) for tensor in tensors]
     \end{lstlisting}
 
     \caption{Utilization of the classes}
+   
 
-    
 \end{program}
 
+\section{Experiments}
+
+In order to illustrate the usefulness of GradCAM, we conducted some experiments inducing variations in the input image. Those variations were made in three ways: noise, brightness and contrast. The GradCAM was calculated for the top class and the original class.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{experiments/goldenretriever}    
+    \caption{Noise variation}
+
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{experiments/redfox}    
+    \caption{Brightness variation}
+
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{experiments/redfox}    
+    \caption{Contrast variation}
+
+\end{figure}
+
+In the three figures, it's possible to observe how the GradCAM outputs become dispersed as the image degrades. At the first experiment, for instance, the focus of the network gets more dispersed as the noise increases. At the maximum level of noise, the GradCAM outputs a heatmap focusing heavily on the ground and on the background.
+
+The experiments also gives us some insights in what can be causing wrong outputs. At the red fox experiment, at the last stage of the stage of degradation, the output is "envelope". This seems absurd and completely nonsensical, but by examining the heatmap, it's clear that the network is being mislead by the vast amount of completely white regions at the image.
