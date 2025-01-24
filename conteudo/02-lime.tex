@@ -1,1 +1,25 @@
 \chapter{Local Interpretable Model-agnostic Explanations (LIME)}
+
+Local Interpretable Model-agnostic Explanations (LIME) \citep{ribeiro2016whyitrustyou}  is a tool used to visualize the importance of features on the result of a model's prediction.
+A score is given to each feature fed to the model, making it possible to understand a black-box model's decision based on its inputs. 
+
+In this chapter, we will discuss how LIME works, how can one use it on image classification models, we will present our implementation of the method and show some experiments done using the technique. 
+
+\section{How it Works}
+
+LIME works by training an interpretable model (\ref{sec:what_is_xai}) to mock the complex \emph{black-box} model over a region of the model's domain. 
+Normally, a single sample is selected from a dataset and small perturbations are applied to that sample in order to create new samples and create a \emph{region} to be explained by LIME.
+In that process, a new dataset made by the sample and its perturbations is created and can be used to train the simple interpretable model. 
+The interpretable model \(\) will be trained over the complex model \(f\) predictions on the new dataset, optimizing the following optimization problem:
+
+\begin{equation}
+    g^* = \argmin_{g \;\in\; G} \mathcal{L}(f, g, \pi_x) + \Sigma(g).
+    \label{eq:lime_optimization}  
+\end{equation}
+
+\section{LIME on Image Models}
+
+\section{Implementation}
+
+
+\section{Experiments}
