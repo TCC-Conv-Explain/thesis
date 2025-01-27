@@ -1,0 +1,11 @@
+\chapter{Final Considerations}
+
+In this capstone project, various techniques for enhancing the interpretability of Convolutional Neural Networks (CNNs) were explored, including LIME, Grad-CAM, and Feature Visualization.
+
+These methods have proven to be valuable tools for understanding different aspects of a model's decision-making process. LIME and Grad-CAM facilitate the visualization of how a model justifies its predictions by highlighting the most influential regions of an input. Meanwhile, Feature Visualization provides deeper insights into how individual neurons and layers respond to distinct patterns in the input data, revealing the hierarchical representations learned by the model.
+
+Our experiments indicate that Grad-CAM is more effective than LIME for visualizing model explanations. Grad-CAM produces a continuous heatmap over the pixels of an image, whereas LIME generates only binary masks over the original image. Additionally, LIME requires extensive hyperparameter tuning, while Grad-CAM operates without hyperparameter adjustments, making it a more practical choice in many scenarios.
+
+The experiments further demonstrated that Feature Visualization provides meaningful insights into how different layers and class neurons process information, revealing the inner workings of the CNN.
+
+In conclusion, this study contributes to a better understanding of XAI methods in CNNs, offering practical insights into the strengths and limitations of LIME, Grad-CAM, and Feature Visualization in model interpretability.
