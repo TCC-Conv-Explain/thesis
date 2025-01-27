@@ -257,6 +257,7 @@ Here, the sample weight function can be defined as the expression
 
 \begin{equation}
     \texttt{sample\_weight} = \sqrt{\exp({\texttt{cosine\_similarity}^2 / \texttt{kernel\_samples}^2})}
+    \label{eq:sample_weights_lime}
 \end{equation}
 where \texttt{cosine\_similarity} is the cosine similarity between the samples tensor and a all-ones tensor and \texttt{kernel\_samples} is a hyperparameter in the interval \((0, 1)\).
 
@@ -293,4 +294,214 @@ By extracting the interpretable model's weights, we can find the most important 
 
 Generating a LIME visualization for our desired image.
 
+\newpage
 \section{Experiments} 
+
+In this section, different hyperparameter configurations on different images using LIME were explored.
+The experiments were conducted on the VGG16 CNN architecture trained on ImageNet. 
+The Quickshift algorithm was used for the images feature engineering. 
+The distance function \(\pi_x\) used in the experiments is the same as the one used in \ref{eq:sample_weights_lime}.
+
+We will examine instances where the complex model failed to predict the expected class, as well as cases where it accurately identified the correct label.
+
+\subsection{Successful Predictions}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/broom.jpeg}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/broom_lime_segmentation.png}
+        \caption{Superpixel segmentation}
+    \end{subfigure}
+
+    \caption{Broom image with superpixel segmentation}
+\end{figure}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/broom/lime_broom_sp0.4_dk0.5_nc5.png}
+        \caption{Top 5 Superpixels, Sampling probability of 40\% and distance kernel of 0.5}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/broom/lime_broom_sp0.5_dk0.5_nc10.png}
+        \caption{Top 10 Superpixels, Sampling probability of 50\% and distance kernel of 0.5}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/broom/lime_broom_sp0.8_dk1_nc15.png}
+        \caption{Top 15 Superpixels, Sampling probability of 80\% and distance kernel of 1}
+    \end{subfigure}
+    \caption{Broom Visualizations with different hyperparameter configurations}
+\end{figure}
+
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/dog.jpg}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/dog_lime_segmentation.png}
+        \caption{Superpixel segmentation}
+    \end{subfigure}
+
+    \caption{Golden Retriever image with superpixel segmentation}
+\end{figure}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/dog/lime_dog_sp0.4_dk0.5_nc5.png}
+        \caption{Top 5 Superpixels, Sampling probability of 40\% and distance kernel of 0.5}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/dog/lime_dog_sp0.6_dk0.75_nc10.png}
+        \caption{Top 10 Superpixels, Sampling probability of 60\% and distance kernel of 0.75}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/dog/lime_dog_sp0.8_dk1_nc15.png}
+        \caption{Top 15 Superpixels, Sampling probability of 80\% and distance kernel of 1}
+    \end{subfigure}
+    \caption{Golden Retriver Visualizations with different hyperparameter configurations}
+\end{figure}
+
+Our experiments confirm that the complex model aligns well with human judgment, primarily focusing on highly distinctive features, such as the head of a broom and the head and body of a Golden Retriever.
+
+Hyperparameters can significantly influence the outcome of a LIME visualization. 
+For instance, in the broom example, one broom head appears in the Top 5 superpixels but is absent from the Top 15 superpixels when using a different hyperparameter configuration.
+The same goes for the dog's visualization, with its frontal legs present in the Top 5 but absent on the Top 15 of another hyperparameter configuration.
+
+\subsection{Failed Predictions}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/sea_lion.jpeg}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/sea_lion_lime_segmentation.png}
+        \caption{Superpixel segmentation}
+    \end{subfigure}
+
+    \caption{Sea Lion image with superpixel segmentation}
+\end{figure}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/sea_lion/lime_sea_lion_sp0.4_dk0.5_nc5.png}
+        \caption{Top 5 Superpixels, Sampling probability of 40\% and distance kernel of 0.5}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/sea_lion/lime_sea_lion_sp0.7_dk0.5_nc10.png}
+        \caption{Top 10 Superpixels, Sampling probability of 60\% and distance kernel of 0.75}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/sea_lion/lime_sea_lion_sp0.8_dk1_nc15.png}
+        \caption{Top 15 Superpixels, Sampling probability of 80\% and distance kernel of 1}
+    \end{subfigure}
+    \caption{Polar Bear Visualizations with different hyperparameter configurations (Expected: Sea Lion)}
+\end{figure}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/peacock.jpeg}
+        \caption{Original Image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/peacock_lime_segmentation.png}
+        \caption{Superpixel segmentation}
+    \end{subfigure}
+
+    \caption{Peacock image with superpixel segmentation}
+\end{figure}
+
+\begin{figure}
+    \captionsetup{justification=centering}
+
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/peacock/lime_peacock_sp0.4_dk0.5_nc5.png}
+        \caption{Top 5 Superpixels, Sampling probability of 40\% and distance kernel of 0.5}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/peacock/lime_peacock_sp0.5_dk0.75_nc10.png}
+        \caption{Top 10 Superpixels, Sampling probability of 50\% and distance kernel of 0.75}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \captionsetup{justification=centering}
+        \centering
+        \includegraphics[width=.7\linewidth]{figuras/lime/experiments/peacock/lime_peacock_sp0.8_dk0.75_nc15.png}
+        \caption{Top 15 Superpixels, Sampling probability of 80\% and distance kernel of 0.75}
+    \end{subfigure}
+    \caption{Mosquito Net Visualizations with different hyperparameter configurations (Expected: Peacock)}
+\end{figure}
+
+
+Analyzing the failed experiment cases reveals that the model may have misinterpreted a peacock's tail as a mosquito net. 
+Additionally, in the sea lion image, the complex model appears to focus on both the sea lion and the sandy ground, likely leading to a misclassification due to the shared habitat of polar bears and sea lions.
+
+
+% I need a way to cite that LIME needs A LOT of hyperparameters. How?
