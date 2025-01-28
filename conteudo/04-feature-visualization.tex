@@ -12,7 +12,7 @@
 
 \section{The Optimization Problem}
 
-Feature Visualization is a technique that involves maximizing values of neurons, sets of neurons or even layers of a Neural Network in order to understand concepts learned by the model.
+Feature Visualization \citep{FeatVisFirstArticle} is a technique that involves maximizing values of neurons, sets of neurons or even layers \citep{DeepDreamArticle} of a Neural Network in order to understand concepts learned by the model.
 By maximizing a neuron's value, we can better understand what set of features each part of our network is learning to capture and verify if the network is aligned with human judgement.
 In simple terms, Feature Visualization can be described by the following optimization problem:
 
@@ -163,7 +163,7 @@ Using the techniques found in this section, an implementation will be proposed i
 
 Following the theory explored in the last section, an implementation in Python using the library \href{https://pytorch.org/}{Pytorch} will be proposed in this section. 
 
-For our experiments, we will use a VGG16 CNN architecture trained on ImageNet. The model is made available by the library \href{https://pytorch.org/vision/stable/index.html}{Torchvision}. 
+For our experiments, we will use a VGG16 CNN architecture \citep{simonyan2015deepconvolutionalnetworkslargescale} trained on ImageNet \citep{russakovsky2015imagenetlargescalevisual}. The model is made available by the library \href{https://pytorch.org/vision/stable/index.html}{Torchvision}. 
 We can import the model with pretrained weights with the code bellow: 
 
 \begin{program}

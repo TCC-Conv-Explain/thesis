@@ -114,7 +114,7 @@ A high positive weight means that a superpixel positively impacts a probability 
 
 \newpage
 
-An image explanation is shown in image \ref{fig:LIME_vis_image} for the class "Golden Retriever", using a VGG16 model:
+An image explanation is shown in image \ref{fig:LIME_vis_image} for the class "Golden Retriever", using a VGG16 \citep{simonyan2015deepconvolutionalnetworkslargescale} model:
 
 
 \begin{figure}
@@ -133,7 +133,7 @@ An image explanation is shown in image \ref{fig:LIME_vis_image} for the class "G
         \includegraphics[width=0.5\linewidth]{figuras/lime/lime_dog_sp0.4_dk0.5_nc10.png}
         \caption{LIME Visualization of image}
     \end{subfigure}
-    \caption{Visualization of top 15 most important superpixels for "Golden Retriever" ImageNet Class in image}
+    \caption{Visualization of top 15 most important superpixels for "Golden Retriever" ImageNet \citep{russakovsky2015imagenetlargescalevisual} Class in image}
     \label{fig:LIME_vis_image}
 \end{figure}
 
@@ -141,7 +141,7 @@ An image explanation is shown in image \ref{fig:LIME_vis_image} for the class "G
 
 Using the theory presented in previous sections, an implementation using \href{https://pytorch.org/}{Pytorch} for loading pretrained CNNs, \href{https://scikit-learn.org/stable/}{Scikit-Learn} for Linear models and \href{https://scikit-image.org/}{Scikit-image} for image segmentation using Quickshift.
 
-Our implementation focused on the VGG16 CNN trained on ImageNet, using a Linear Regression model for LIME explanations.
+Our implementation focused on the VGG16 CNN trained on ImageNet \citep{russakovsky2015imagenetlargescalevisual}, using a Linear Regression model for LIME explanations.
 We can load both models with the code bellow:
 
 \begin{program}
@@ -301,7 +301,7 @@ Generating a LIME visualization for our desired image.
 \section{Experiments} 
 
 In this section, different hyperparameter configurations on different images using LIME were explored.
-The experiments were conducted on the VGG16 CNN architecture trained on ImageNet. 
+The experiments were conducted on the VGG16 CNN architecture trained on ImageNet \citep{russakovsky2015imagenetlargescalevisual}. 
 The Quickshift algorithm was used for the images feature engineering. 
 The distance function \(\pi_x\) used in the experiments is the same as the one used in \ref{eq:sample_weights_lime}.
 
