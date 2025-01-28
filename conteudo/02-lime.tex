@@ -38,8 +38,13 @@ Where \(g^*\) is the final trained interpretable model,
 
 Where \(Z\) is the artificial dataset created from the sample, with datapoints \(z\) - a point with the original model's features, and \(z'\), a data point that represents a transformation applied to those features, like using a subset of inputs or attributes created by \emph{feature engineering}.
 
-% Create a new paragraph to explain better pi_x and how we used it in our implementation.
-% Create a new paragraph and talk about what we would do to analyze the new interpretable model to understand the complex model
+The function \(\pi_x\) can be defined arbitrarily, provided that it satisfies the condition \(\pi_x(z) \in [0, 1]\) for all possible samples \(z\) in the artificial dataset. 
+It must also ensure that \(\pi_x(x) = 1\) for the original sample \(x\), with scores decreasing as data points move further away from \(x\), while higher scores are assigned to points closer to \(x\)
+
+With the interpretable model trained, one can analyze its structure to interpret the complex model locally.
+For example, a Linear Regression model could be interpreted by analyzing its weights. 
+A positive weight value would mean that a feature had a positive impact in the prediction made by the complex model, while a negative weight associated to a feature would represent a negative impact to the model's inference. 
+
 Because of the huge ammount of variables in a image classification task, directly using an image consisting of hundreds of thousands of pixels in an interpretable model would yield poor results, since analyzing each individual pixel's contribution to a prediction is not well aligned with a human interpretation of image features.
 In order to generate more valuable results, a feature engineering technique will be proposed on the next section to model LIME for Image classification tasks. 
 
