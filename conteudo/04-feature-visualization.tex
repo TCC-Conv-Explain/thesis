@@ -3,11 +3,6 @@
 % podendo colocar exemplos das classes exploradas e com menos divisões de subsections. 
 % Talvez utilizando uma imagem mostrando todas visualizações em um único lugar?
 
-% Além disso, talvez seria legal juntar a explicação teórica com a explicação prática do tópico,
-% já que acredito que faz mais sentido lógico como um todo. 
-% 
-% Vamos esperar pra ver o que a Nina tem a dizer!
-
 \chapter{Feature Visualization}
 
 \section{The Optimization Problem}
@@ -977,18 +972,20 @@ Feature visualization techniques can also be applied to images with non-random i
 By leveraging the methods discussed in this chapter, it becomes possible to create visuals that appear as if they were pulled directly from a \emph{dream}\footnotemark.
 The following examples showcase images generated using this technique, illustrating its ability to produce dreamlike and surreal visuals.
 
-\footnotetext{The idea of applying Feature Visualization to Non-Random Initial images became popular by a program called \emph{DeepDream}, created by Google}
+\footnotetext{The idea of applying Feature Visualization to Non-Random Initial images became popular by a program called \emph{DeepDream} \citep{DeepDreamArticle}, created by Google}
+
+\newpage
 \begin{figure}
     \captionsetup{justification=centering}
 
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[t]{0.48\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/christ-the-redeemer.jpg}
         \caption{Original Image}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[t]{0.48\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/christ-the-redeemer_li24_lr8e-2_pl4.png}
@@ -1002,14 +999,14 @@ The following examples showcase images generated using this technique, illustrat
 \begin{figure}
     \captionsetup{justification=centering}
 
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[t]{0.48\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/ime-usp.jpg}
         \caption{Original Image}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[t]{0.48\textwidth}
         \captionsetup{justification=centering}
         \centering
         \includegraphics[width=.7\linewidth]{figuras/feat_vis/experiments/non_random/ime-usp_li24_lr4e-2_pl4_no-blur.png}
@@ -1041,6 +1038,7 @@ The following examples showcase images generated using this technique, illustrat
     \label{fig:mona_dream}
 \end{figure}
 
+\newpage
 \begin{figure}
     \captionsetup{justification=centering}
 
@@ -1061,3 +1059,7 @@ The following examples showcase images generated using this technique, illustrat
     \caption{The Great Wave off Kanagawa}
     \label{fig:wave_dream}
 \end{figure}
+
+These transformations reveal how deep networks reinterpret complex imagery, yielding novel insights into their internal representations. For example, despite the dreamlike alterations, the Mona Lisa’s face retained a human-like structure, with recognizable eyes, nose, and mouth still present in the resulting image. 
+This persistence could potentially be correlated with the model’s generalization capability, suggesting that it has learned to consistently represent facial structures across different contexts. 
+Such findings highlight both the creative and analytical potential of modern deep learning systems.
