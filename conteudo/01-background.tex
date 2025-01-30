@@ -5,7 +5,7 @@
 % Aqui podemos começar falando um pouco sobre o background de explainable AI e depois conectamos
 % falando sobre redes neurais e gradiente descendente para, por fim, falar um pouco sobre CNNs.
 
-
+\hypersetup{pageanchor=false}
 \enlargethispage{-1\baselineskip}
 
 \chapter{Background}
@@ -143,7 +143,8 @@ For example, by using the Multilayer Perceptron, one can model a XOR function:
 \begin{figure}
     \centering
     \includegraphics[scale=0.4]{figuras/xor_problem.png}
-    \caption{The XOR Problem Font: \emph{Kevin Swingler Lecture Notes}. \label{fig:xor_problem}}
+    \caption{The XOR Problem. }
+    \label{fig:xor_problem}
 \end{figure}
 
 The XOR problem can not be solved by using a single Perceptron, since it is not a linear problem.
@@ -205,27 +206,30 @@ Given two discrete two-dimensional signals \(f\) and \(g\), their convolution \(
 
 In practice, the signal \(g\) is represented by a window (or kernel), usually square and of odd size. Thus, we can abstract convolution as the multiplication of a sliding window. The picture below illustrates this process. It is important to note that the window needs to be flipped during the convolution, although this is not illustrated in the picture.
 
-\begin{figure}[h!]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/conv.png}
-    \caption{2D Convolution}
+    \caption{2D Convolution. \footnotemark}
 \end{figure}
+\footnotetext{Source: https://www.geeksforgeeks.org/apply-a-2d-convolution-operation-in-pytorch/}
 
 This process can be used to apply different filters to images. For example: using a \(3 \times 3\) window with all weights equal to \(\frac{1}{9}\), we can generate a filter that blurs the image (moving average). Below is an example of applying this filter:
 
-\begin{figure}[h!]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/blur.png}
-    \caption{Filtered Image (3x3 Mean Filter)}
+    \caption{Filtered Image (3x3 Mean Filter). \footnotemark}
 \end{figure}
+\footnotetext{Source: https://jeheonpark93.medium.com/vc-convolution-based-image-denoising-sharpening-332bbe6293ff}
 
 It is also important to note that convolution is commonly implemented in machine learning contexts as "cross-correlation," which is a very similar operation but without the flipping of the window. Note that, since the weights are learned in our case, there is no difference. Therefore, in our context, convolution and cross-correlation are synonymous.
 
-\begin{figure}[h!]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{figuras/cross-correlation.png}
-    \caption{Comparison with Cross-Correlation}
+    \caption{Comparison with Cross-Correlation. \footnotemark}
 \end{figure}
+\footnotetext{Source: https://en.wikipedia.org/wiki/Cross-correlation}
 
 A pertinent question that can be asked is what happens at the edges of the image. When the window is sliding over them, what happens to the missing pixels? The process of filling in these pixels is called padding. Padding can be done with zeros, the nearest pixel, or not be done at all. Note that when there is no padding, the image decreases in size after convolution.
 
@@ -272,19 +276,27 @@ Thus, the features involved gradually become less localized and more global (per
 
 To accomplish this, we use "pooling" layers. These layers work similarly to convolutions: windows slide over the data and compute an output based on nearby pixels. However, this time, a function is used to aggregate these data. Common functions include "max" (maximum value) and "avg" (average value).
 
-\begin{center}
-\includegraphics[width=0.8\textwidth]{figuras/max_pool.png}
-\end{center}
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{figuras/max_pool.png}
+    \end{center}
+    \caption{Illustration of max pooling. \footnotemark}
+\end{figure}
+\footnotetext{Source: https://nico-curti.github.io/NumPyNet/NumPyNet/layers/maxpool_layer.html}
 
 \subsection{Receptive Field}
 
-An important concept for understanding the power of \textbf{deep convolutional networks} is the \textbf{receptive field}. This concept relates to the power that chained convolutions have.
+An important concept for understanding the power of \textbf{deep convolutional networks} is the \textbf{receptive field}\cite{RecpField}. This concept relates to the power that chained convolutions have.
 
 Consider an input image. Apply a \( 3 \times 3 \) convolution to it. Now, apply another \( 3 \times 3 \) convolution to the output of the first convolution. Observe this output image. How much information does each pixel contain about its neighbors?
 
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{figuras/receptive_field.png}
+\caption{Illustration of receptive fields. \footnotemark}
 \end{center}
+\end{figure}
+\footnotetext{Source: https://medium.com/@rekalantar/receptive-fields-in-deep-convolutional-networks-43871d2ef2e9}
 
 The answer is that each pixel contains information from a region of size \( 5 \times 5 \) around it! This is the receptive field of these neurons.
 
